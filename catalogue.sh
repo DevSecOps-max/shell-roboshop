@@ -36,43 +36,43 @@ VALIDATE(){
 }
 
 dnf module disable nodejs -y  &>>$LOG_FILE
-LOGICCHECK $? "Disabling default nodejs module"
+VALIDATE $? "Disabling default nodejs module"
 
 dnf module enable nodejs:20 -y &>>$LOG_FILE
-LOGICCHECK $? "Enabling nodejs:20 module"
+VALIDATE $? "Enabling nodejs:20 module"
 
 dnf install nodejs -y &>>$LOG_FILE
-LOGICCHECK $? "Installing nodejs"
+VALIDATE $? "Installing nodejs"
 
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
-LOGICCHECK $? "Creating a roboshop system user"
+VALIDATE $? "Creating a roboshop system user"
 
 mkdir /app 
-LOGICCHECK $? "Creating a app directory"
+VALIDATE $? "Creating a app directory"
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip  &>>$LOG_FILE
-LOGICCHECK $? "Downloading application code to the created app directory"
+VALIDATE $? "Downloading application code to the created app directory"
 
 cd /app 
 unzip /tmp/catalogue.zip &>>$LOG_FILE
-LOGICCHECK $? "unzipping catalogue"
+VALIDATE $? "unzipping catalogue"
 
 npm install  &>>$LOG_FILE
-LOGICCHECK $? "installing dependencies"
+VALIDATE $? "installing dependencies"
 
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
-LOGICCHECK $? "Copying the catalogue service"
+VALIDATE $? "Copying the catalogue service"
 
 systemctl daemon-reload &>>$LOG_FILE
 systemctl enable catalogue  &>>$LOG_FILE
 systemctl start catalogue
 
-LOGICCHECK $? "Starting catalogue"
+VALIDATE $? "Starting catalogue"
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 
 dnf install mongodb-mongosh -y &>>$LOG_FILE
-LOGICHECK $? "Installing mongodb client"
+VALIDATE $? "Installing mongodb client"
 
 mongosh --host mongodb.laddudevops.shop </app/db/master-data.js &>>$LOG_FILE
 
