@@ -2,6 +2,7 @@
 
 #!/bin/bash
 
+START_TIME=$(date +%s)
 USERID=$(id -u)
 R="\e[31m"
 G="\e[32m"
@@ -77,6 +78,11 @@ systemctl enable user  &>>$LOG_FILE
 systemctl start user
 
 VALIDATE $? "Started user"
+
+END_TIME=$(date +%s)
+TOTAL_TIME=$(( $END_TIME - $START_TIME ))
+
+echo  -e "Script execution has been completed, $Y Time taken: $TOTAL_TIME seconds $N" | tee -a $LOG_FILE
 
 
 
