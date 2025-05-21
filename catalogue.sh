@@ -51,7 +51,7 @@ then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
     VALIDATE $? "Creating roboshop system user"
 else
-    echo "System user roboshop is already created $Y skipping $N"
+    echo -e "System user roboshop is already created $Y skipping $N"
 fi
 
 
@@ -61,6 +61,7 @@ VALIDATE $? "Creating a app directory"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip  &>>$LOG_FILE
 VALIDATE $? "Downloading application code to the created app directory"
 
+rm -rf /app/*
 cd /app 
 unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "unzipping catalogue"
