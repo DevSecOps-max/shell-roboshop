@@ -35,14 +35,13 @@ VALIDATE(){
     fi
 }
 
-
 dnf module disable redis -y &>>$LOG_FILE
 VALIDATE $? "Disabling the default redis version"
 
 dnf module enable redis:7 -y &>>$LOG_FILE
 VALIDATE $? "Enabling the required version of redis:7"
 
-dnf install redis -y  &>$LOG_FILE
+dnf install redis -y  &>>$LOG_FILE
 VALIDATE $? "Installing the Redis"
 
 #sed -i "s/127.0.0.1/0.0.0.0" /etc/redis/redis.conf
