@@ -81,6 +81,7 @@ dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Installing mongodb client"
 
 mongosh --host mongodb.laddudevops.shop </app/db/master-data.js &>>$LOG_FILE
+VALIDATE $? "loading data into MongoDB"
 
 
 
