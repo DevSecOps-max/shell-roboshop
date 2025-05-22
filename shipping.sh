@@ -85,9 +85,18 @@ VALIDATE $? "Starting Shipping"
 dnf install mysql -y  &>>$LOG_FILE
 VALIDATE $? "Installing mysql"
 
+
+mysql -h mysql.laddudevops.shop -u root -p$MYSQL_ROOT_PASSWORD -e 'use cities'
+if [ $? -ne 0 ]
+then
 mysql -h mysql.laddudevops.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql
 mysql -h mysql.laddudevops.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql 
 mysql -h mysql.laddudevops.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql
+
+else
+    echo -e "Data is already loaded into the MYSQL.. $Y skipping $N"
+
+fi
 
 VALIDATE $? "Loading data into MYSQL"
 
