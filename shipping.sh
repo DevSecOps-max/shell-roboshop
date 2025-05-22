@@ -89,17 +89,14 @@ VALIDATE $? "Installing mysql"
 mysql -h mysql.laddudevops.shop -u root -p$MYSQL_ROOT_PASSWORD -e 'use cities'
 if [ $? -ne 0 ]
 then
-mysql -h mysql.laddudevops.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql
-mysql -h mysql.laddudevops.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql 
-mysql -h mysql.laddudevops.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql
+mysql -h mysql.laddudevops.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql  &>>$LOG_FILE
+mysql -h mysql.laddudevops.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql &>>$LOG_FILE
+mysql -h mysql.laddudevops.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE
 
 else
     echo -e "Data is already loaded into the MYSQL.. $Y skipping $N"
 
 fi
-
-VALIDATE $? "Loading data into MYSQL"
-
 
 systemctl restart shipping &>>$LOG_FILE
 VALIDATE $? "Restarting shipping"
