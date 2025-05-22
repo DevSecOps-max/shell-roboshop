@@ -47,7 +47,7 @@ dnf install nginx -y  &>>$LOG_FILE
 VALIDATE $? "Installing the nginx"
 
 systemctl enable nginx  &>>$LOG_FILE
-systemctl start nginx   
+systemctl start nginx   &>>$LOG_FILE
 VALIDATE $? "Enabling and starting the nginx"
 
 rm -rf /usr/share/nginx/html/* 
@@ -64,10 +64,10 @@ VALIDATE $? "Unzipping the frontend content"
 rm -rf /etc/nginx/nginx.conf &>>$LOG_FILE
 VALIDATE $? "Remove the default nginx configuration content"
 
-cp $SCRIPT_DIR/nginx.conf  /etc/nginx/nginx.conf
+cp $SCRIPT_DIR/nginx.conf  /etc/nginx/nginx.conf &>>$LOG_FILE
 VALIDATE $? "Copying the nginx.conf"
 
-systemctl restart nginx 
+systemctl restart nginx  &>>$LOG_FILE
 VALIDATE $? "restarting the nginx"
 
 
