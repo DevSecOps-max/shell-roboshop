@@ -42,7 +42,7 @@ VALIDATE(){
 }
 
 
-cp $SCRIPT_DIR/rabbitmq  /etc/yum.repos.d/rabbitmq.repo
+cp $SCRIPT_DIR/rabbitmq.repo  /etc/yum.repos.d/rabbitmq.repo
 VALIDATE $? "Adding rabbitMQ repo"
 
 
