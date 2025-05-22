@@ -85,9 +85,9 @@ VALIDATE $? "Starting Shipping"
 dnf install mysql -y  &>>$LOG_FILE
 VALIDATE $? "Installing mysql"
 
-mysql -h mysql.laddudevops.shop -uroot -pRoboShop@1 < /app/db/schema.sql
-mysql -h mysql.laddudevops.shop -uroot -pRoboShop@1 < /app/db/app-user.sql 
-mysql -h mysql.laddudevops.shop -uroot -pRoboShop@1 < /app/db/master-data.sql
+mysql -h mysql.laddudevops.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql
+mysql -h mysql.laddudevops.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql 
+mysql -h mysql.laddudevops.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql
 
 VALIDATE $? "Loading data into MYSQL"
 
