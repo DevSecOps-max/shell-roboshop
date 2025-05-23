@@ -71,6 +71,26 @@ maven_setup(){
 
 }
 
+
+python_setup(){
+
+
+    dnf install python3 gcc python3-devel -y  &>>$LOG_FILE
+    VALIDATE $? "Installing python3 packages"
+
+    pip3 install -r requirements.txt  &>>$LOG_FILE
+    VALIDATE $? "Installing dependenices"
+
+    cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service  &>>$LOG_FILE
+    VALIDATE $? "Copying payment service"
+
+
+
+}
+
+
+
+
 systemd_setup(){
     cp $SCRIPT_DIR/$app_name.service /etc/systemd/system/$app_name.service
     VALIDATE $? "Copying the $app_name service"
